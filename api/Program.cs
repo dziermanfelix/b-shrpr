@@ -22,8 +22,15 @@ app.UseCors();
 app.MapGet("/api/users", (UserStore store) => Results.Ok(store.GetUsers()));
 app.MapPost("/api/users", (UserInput input, UserStore store) =>
 {
-    var user = store.CreateUser(input);
-    return Results.Created($"/api/users/{user.Id}", user);
+    try
+    {
+        var user = store.CreateUser(input);
+        return Results.Created($"/api/users/{user.Id}", user);
+    }
+    catch (InvalidOperationException ex)
+    {
+        return Results.Conflict(ex.Message);
+    }
 });
 
 app.Run();

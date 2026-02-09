@@ -15,8 +15,8 @@ export async function createUser(input: UserInput): Promise<User> {
     body: JSON.stringify(input),
   })
   if (!res.ok) {
-    const err = await res.text()
-    throw new Error(err || 'Failed to create user')
+    const errorMessage = await res.text()
+    throw new Error(errorMessage || `Failed to create user (${res.status})`)
   }
   return res.json()
 }
