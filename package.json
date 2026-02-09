@@ -1,0 +1,15 @@
+{
+  "name": "bshrpr",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n api,web \"dotnet run --project api\" \"npm run dev -w web\"",
+    "dev:api": "dotnet run --project api",
+    "dev:web": "npm run dev -w web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "workspaces": [
+    "web"
+  ]
+}
