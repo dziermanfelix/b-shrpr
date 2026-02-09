@@ -8,6 +8,11 @@
 - **API**: GET/POST `/api/users` (in-memory store; users returned in alphabetical order by name).
 - **Admin frontend**: Home page lists users (alphabetical) and an “Add user” button; add form at `/add` (name, username, email).
 
+## Prerequisites
+
+- [.NET SDK](https://dotnet.microsoft.com/download) (e.g. `brew install --cask dotnet-sdk` on macOS)
+- Node.js 18+
+
 ## Run everything
 
 From the repo root:
@@ -28,8 +33,3 @@ npm run dev
 ## Testing
 
 Run API tests: `npm run test:api`
-
-## Prerequisites
-
-- [.NET SDK](https://dotnet.microsoft.com/download) (e.g. `brew install --cask dotnet-sdk` on macOS)
-- Node.js 18+
