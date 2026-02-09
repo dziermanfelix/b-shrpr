@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "concurrently -n api,web \"dotnet run --project api\" \"npm run dev -w web\"",
     "dev:api": "dotnet run --project api",
-    "dev:web": "npm run dev -w web"
+    "dev:web": "npm run dev -w web",
+    "test:api": "dotnet test api/Api.Tests/Api.Tests.csproj"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

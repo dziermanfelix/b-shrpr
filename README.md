@@ -25,6 +25,10 @@ npm run dev
 - **API only:** `npm run dev:api` (or `cd api && dotnet run`)
 - **Web only:** `npm run dev:web` (or `cd web && npm run dev`)
 
+## Testing
+
+Run API tests: `npm run test:api`
+
 ## Prerequisites
 
 - [.NET SDK](https://dotnet.microsoft.com/download) (e.g. `brew install --cask dotnet-sdk` on macOS)
