@@ -142,5 +142,26 @@ public class UsersApiTests
 
         // Assert
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.Contains("email", content, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task PostUsers_WithCaseInsensitiveDuplicateUsername_ReturnsConflict()
+    {
+        // Arrange
+        using var factory = CreateFactory();
+        using var client = factory.CreateClient();
+        var input1 = new UserInput("John Doe", "johndoe", "john@example.com");
+        var input2 = new UserInput("Jane Doe", "JOHNDOE", "jane@example.com");
+
+        // Act
+        await client.PostAsJsonAsync("/api/users", input1);
+        var response = await client.PostAsJsonAsync("/api/users", input2);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.Contains("username 'JOHNDOE' already exists", content, StringComparison.OrdinalIgnoreCase);
     }
 }

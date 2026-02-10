@@ -134,6 +134,24 @@ public class UserStoreTests
     }
 
     [Fact]
+    public void CreateUser_WhenUsernameConflict_RollbackEmailAllowsReuse()
+    {
+        // When duplicate username fails, the tentatively reserved email is rolled back
+        // so the same email can be used in a subsequent successful create.
+        var store = new UserStore();
+        store.CreateUser(new UserInput("John Doe", "johndoe", "john@example.com"));
+
+        // Fail: duplicate username, new email (jane@example.com was tentatively added then rolled back)
+        Assert.Throws<InvalidOperationException>(() =>
+            store.CreateUser(new UserInput("Jane Doe", "johndoe", "jane@example.com")));
+
+        // Succeed: jane@example.com is still available after rollback
+        var user = store.CreateUser(new UserInput("Jane Doe", "janedoe", "jane@example.com"));
+        Assert.Equal("jane@example.com", user.Email);
+        Assert.Equal(2, store.GetUsers().Count);
+    }
+
+    [Fact]
     public void CreateUser_GeneratesUniqueIds()
     {
         // Arrange
